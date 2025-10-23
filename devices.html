@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Puff&Go — Устройства</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background: #0e0e10;
+      color: #fff;
+      font-family: "Inter", sans-serif;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    h1, h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .devices-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .device-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      width: 180px;
+      cursor: pointer;
+      transition: border-color 0.3s, background-color 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .device-card.selected {
+      border-color: #4c8bf5;
+      background-color: rgba(76,139,245,0.1);
+    }
+    .device-name {
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 8px;
+      text-align: center;
+      user-select: none;
+      word-break: break-word;
+    }
+    .device-name.out-of-stock {
+      text-decoration: line-through;
+      color: #f44336;
+    }
+    .device-price {
+      font-size: 16px;
+      color: #4c8bf5;
+      margin-bottom: 8px;
+    }
+    .device-availability {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 8px;
+      user-select: none;
+    }
+    .device-availability.in-stock {
+      color: #4caf50;
+    }
+    .device-availability.out-of-stock {
+      color: #f44336;
+    }
+    .order {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto 40px auto;
+      animation: fadeUp 0.8s ease forwards;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    select, input {
+      width: 100%;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+    }
+    select option.out-of-stock {
+      color: #f44336;
+    }
+    .price-box {
+      margin-top: 14px;
+      padding: 10px 16px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+    }
+    .price-box strong {
+      color: #4c8bf5;
+      font-size: 18px;
+    }
+    .btn {
+      width: 100%;
+      background: #4c8bf5;
+      border: none;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-top: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn:hover { background: #3a6fd9; }
+    .hidden { display: none; opacity: 0; }
+    .fade-in {
+      display: block !important;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="devices">
+  <header class="site-header">
+    <div class="logo">Puff&Go</div>
+    <nav class="nav">
+      <a href="index.html">Главная</a>
+      <a href="liquids.html">Жидкости</a>
+      <a href="devices.html" class="active">Устройства</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>⚡ Устройства Puff&Go</h1>
+
+    <section class="order" id="orderSection" aria-label="Форма заказа устройства">
+      <form id="deviceForm">
+    
+        <label for="deviceSelect">Выберите устройство:</label>
+        <select id="deviceSelect" required>
+          <option value="" disabled selected>Выберите устройство</option>
+        </select>
+
+   
+        <div id="flavorSection" class="hidden">
+          <label for="flavorSelect">Выберите вкус:</label>
+          <select id="flavorSelect" required disabled>
+            <option value="" disabled selected>Выберите вкус</option>
+          </select>
+        </div>
+
+        <!-- 3️⃣ детали заказа -->
+        <div id="detailsSection" class="hidden">
+          <label>Дата:</label>
+          <input type="date" id="date" required>
+
+          <label>Время:</label>
+          <input type="time" id="time" required>
+
+          <label>Количество:</label>
+          <input type="number" id="qty" min="1" value="1" required>
+
+          <div class="price-box">
+            <span>Цена</span> <strong id="devicePrice">0€</strong>
+          </div>
+
+          <button type="submit" class="btn">Заказать</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Puff&Go © 2025 — Все права защищены</p>
+  </footer>
+
+  <script>
+
+  const deviceStock = {
+    'DV001': {
+      name: 'Elf MoonNight 40K',
+      qty: 14,
+      price: 30,
+      flavors: [
+        { flavorCode: 'DV001-F001', flavorName: 'dragon strawnana' },
+        { flavorCode: 'DV001-F002', flavorName: 'peach berry' },
+        { flavorCode: 'DV001-F003', flavorName: 'Mango Peach watermelon' },
+        { flavorCode: 'DV001-F004', flavorName: 'Pomegranate burst' },
+        { flavorCode: 'DV001-F005', flavorName: 'Kiwi Passion Fruit Guava' }
+      ],
+      flavorStock: {
+        'DV001-F001': 2,
+        'DV001-F002': 3,
+        'DV001-F003': 3,
+        'DV001-F004': 4,
+        'DV001-F005': 3
+      }
+    },
+    'DV007': {
+      name: 'Elf GH33K Pro',
+      qty: 28,
+      price: 27,
+      flavors: [
+        { flavorCode: 'DV007-F001', flavorName: 'kiwi pineapple peach' },
+        { flavorCode: 'DV007-F002', flavorName: 'apple kiwi ice' },
+        { flavorCode: 'DV007-F003', flavorName: 'watermelon ice' },
+        { flavorCode: 'DV007-F004', flavorName: 'Pear soda' },
+        { flavorCode: 'DV007-F005', flavorName: 'Mountain mint' },
+        { flavorCode: 'DV007-F006', flavorName: 'Raspberry grapefruit lemon' },
+        { flavorCode: 'DV007-F007', flavorName: 'Cherry pomegranate pineapple' }
+      ],
+      flavorStock: {
+        'DV007-F001': 4,
+        'DV007-F002': 4,
+        'DV007-F003': 4,
+        'DV007-F004': 4,
+        'DV007-F005': 4,
+        'DV007-F006': 4,
+        'DV007-F007': 4
+      }
+    },
+    'DV015': {
+      name: 'Elf bar raya d3 25k',
+      qty: 16,
+      price: 23,
+      flavors: [
+        { flavorCode: 'DV015-F001', flavorName: 'Grape cherry' },
+        { flavorCode: 'DV015-F002', flavorName: 'Grape mint' },
+        { flavorCode: 'DV015-F003', flavorName: 'Vimto' },
+        { flavorCode: 'DV015-F004', flavorName: 'Double Apple' }
+      ],
+      flavorStock: {
+        'DV015-F001': 4,
+        'DV015-F002': 4,
+        'DV015-F003': 4,
+        'DV015-F004': 4
+      }
+    }
+  };
+
+  const orderSection = document.getElementById("orderSection");
+  const deviceSelect = document.getElementById("deviceSelect");
+  const flavorSection = document.getElementById("flavorSection");
+  const flavorSelect = document.getElementById("flavorSelect");
+  const detailsSection = document.getElementById("detailsSection");
+  const devicePrice = document.getElementById("devicePrice");
+  const form = document.getElementById("deviceForm");
+
+  let selectedDeviceCode = null;
+  let selectedFlavorCode = null;
+
+  function loadDeviceSelect() {
+    deviceSelect.innerHTML = '<option value="" disabled selected>Выберите устройство</option>';
+    for (const code in deviceStock) {
+      const device = deviceStock[code];
+      const opt = document.createElement('option');
+      opt.value = code;
+      opt.textContent = device.name;
+      if (device.qty === 0) {
+        opt.disabled = true;
+        opt.classList.add('out-of-stock');
+        opt.textContent += ' — Нет в наличии';
+      }
+      deviceSelect.appendChild(opt);
+    }
+  }
+
+  deviceSelect.addEventListener('change', () => {
+    selectedDeviceCode = deviceSelect.value;
+    selectedFlavorCode = null;
+    // Заполнить select вкусов
+    updateFlavorSelect(selectedDeviceCode);
+    flavorSection.classList.remove('hidden');
+    detailsSection.classList.add('hidden');
+    document.getElementById("date").value = "";
+    document.getElementById("time").value = "";
+    document.getElementById("qty").value = 1;
+    document.getElementById("date").disabled = true;
+    document.getElementById("time").disabled = true;
+    document.getElementById("qty").disabled = true;
+    devicePrice.textContent = deviceStock[selectedDeviceCode].price + '€';
+  });
+
+  function updateFlavorSelect(code) {
+    const device = deviceStock[code];
+    flavorSelect.innerHTML = '<option value="" disabled selected>Выберите вкус</option>';
+    device.flavors.forEach(flavor => {
+      const opt = document.createElement('option');
+      opt.value = flavor.flavorCode;
+      opt.textContent = flavor.flavorName;
+      if (device.flavorStock && device.flavorStock[flavor.flavorCode] === 0) {
+        opt.disabled = true;
+        opt.classList.add('out-of-stock');
+        opt.textContent += ' — Нет в наличии';
+      }
+      flavorSelect.appendChild(opt);
+    });
+    flavorSelect.disabled = false;
+    flavorSelect.selectedIndex = 0;
+  }
+
+  flavorSelect.addEventListener('change', () => {
+    selectedFlavorCode = flavorSelect.value;
+    if (selectedFlavorCode) {
+      detailsSection.classList.remove('hidden');
+      document.getElementById("date").disabled = false;
+      document.getElementById("time").disabled = false;
+      document.getElementById("qty").disabled = false;
+    } else {
+      detailsSection.classList.add('hidden');
+      document.getElementById("date").disabled = true;
+      document.getElementById("time").disabled = true;
+      document.getElementById("qty").disabled = true;
+    }
+  });
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!selectedDeviceCode || !selectedFlavorCode) return;
+    const device = deviceStock[selectedDeviceCode];
+    let qty = parseInt(document.getElementById("qty").value, 10);
+    if (qty < 1) qty = 1;
+    const flavorAvailableQty = device.flavorStock && device.flavorStock[selectedFlavorCode] !== undefined ? device.flavorStock[selectedFlavorCode] : 0;
+    if (qty > flavorAvailableQty) {
+      alert(`Доступно только ${flavorAvailableQty} шт. выбранного вкуса.`);
+      return;
+    }
+  
+    const orderId = "DV-" + Math.floor(Math.random() * 9999);
+
+    const selectedFlavor = device.flavors.find(f => f.flavorCode === selectedFlavorCode) || {};
+    const selectedFlavorName = selectedFlavor.flavorName || "";
+    
+    const order = {
+      type: "Устройство",
+      deviceCode: selectedDeviceCode,
+      deviceName: device.name,
+      flavorCode: selectedFlavorCode,
+      flavorName: selectedFlavorName,
+      qty,
+      price: device.price,
+      date: document.getElementById("date").value,
+      time: document.getElementById("time").value,
+      orderId: orderId
+    };
+    // Сохраняем order в localStorage
+    localStorage.setItem("lastOrder", JSON.stringify(order));
+   
+    device.qty -= qty;
+    if (device.flavorStock && device.flavorStock[selectedFlavorCode] !== undefined) {
+      device.flavorStock[selectedFlavorCode] -= qty;
+      if (device.flavorStock[selectedFlavorCode] < 0) device.flavorStock[selectedFlavorCode] = 0;
+    }
+
+    if (device.qty === 0) {
+      loadDeviceSelect();
+      deviceSelect.value = "";
+      selectedDeviceCode = null;
+      selectedFlavorCode = null;
+      flavorSection.classList.add('hidden');
+      detailsSection.classList.add('hidden');
+      document.getElementById("date").disabled = true;
+      document.getElementById("time").disabled = true;
+      document.getElementById("qty").disabled = true;
+    } else {
+
+      updateFlavorSelect(selectedDeviceCode);
+      flavorSelect.value = "";
+      selectedFlavorCode = null;
+      detailsSection.classList.add('hidden');
+      document.getElementById("date").disabled = true;
+      document.getElementById("time").disabled = true;
+      document.getElementById("qty").disabled = true;
+    }
+
+    window.location.href = "delivery.html";
+  });
+
+  window.addEventListener('load', () => {
+    selectedDeviceCode = null;
+    selectedFlavorCode = null;
+    loadDeviceSelect();
+    flavorSection.classList.add('hidden');
+    detailsSection.classList.add('hidden');
+    devicePrice.textContent = "0€";
+    document.getElementById("date").value = "";
+    document.getElementById("time").value = "";
+    document.getElementById("qty").value = 1;
+    document.getElementById("date").disabled = true;
+    document.getElementById("time").disabled = true;
+    document.getElementById("qty").disabled = true;
+  });
+  </script>
+</body>
+</html>

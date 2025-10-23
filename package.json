@@ -1,0 +1,15 @@
+{
+  "name": "puffgo",
+  "version": "1.0.0",
+  "description": "Сайт Puff&Go с интеграцией Google Sheets",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "googleapis": "^120.0.0",
+    "node-fetch": "^3.3.2"
+  }
+}

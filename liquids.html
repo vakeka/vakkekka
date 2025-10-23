@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Puff&Go — Жидкости</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    h1, h2, h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .order {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 40px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeUp 0.8s ease forwards;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    select, input {
+      width: 100%;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+    }
+    .price-box {
+      margin-top: 14px;
+      padding: 10px 16px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+    }
+    .price-box strong {
+      color: #4c8bf5;
+      font-size: 18px;
+    }
+    .btn {
+      width: 100%;
+      background: #4c8bf5;
+      border: none;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-top: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn:hover { background: #3a6fd9; }
+    .status { text-align: center; margin-top: 10px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      text-align: center;
+      padding: 10px 8px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      font-size: 14px;
+      width: 150px;
+    }
+    .card:hover {
+      background: linear-gradient(145deg, rgba(76,139,245,0.15), rgba(255,255,255,0.08));
+      border-color: #4c8bf5;
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 5px 12px rgba(76,139,245,0.3);
+    }
+    .card .emoji {
+      margin-top: 4px;
+      font-size: 16px;
+      opacity: 0.85;
+    }
+    .card.sold-out {
+      opacity: 0.6;
+      cursor: not-allowed;
+      border-color: rgba(255, 77, 77, 0.6);
+      background: rgba(255, 77, 77, 0.1);
+      box-shadow: none;
+      transform: none;
+    }
+    .card.sold-out .emoji {
+      opacity: 0.5;
+    }
+    .card.sold-out .card-title,
+    .card.sold-out .card-title * {
+      color: #ff4444 !important;
+      text-decoration: line-through;
+    }
+    .card.selected {
+      border-color: #4c8bf5;
+      background: linear-gradient(145deg, rgba(76,139,245,0.2), rgba(255,255,255,0.08));
+      transform: scale(1.04);
+      box-shadow: 0 6px 16px rgba(76,139,245,0.4);
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .emoji {
+      margin-top: 5px;
+      font-size: 18px;
+    }
+    .sold-out-option {
+      color: #ff3333 !important;
+      background: #fff0f0 !important;
+    }
+  </style>
+</head>
+<body class="liquids">
+  <header class="site-header">
+    <div class="logo">Puff&Go</div>
+    <nav class="nav">
+      <a href="index.html">Главная</a>
+      <a href="liquids.html" class="active">Жидкости</a>
+      <a href="devices.html">Электронные сигареты</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Жидкости Puff&Go</h1>
+
+    
+
+  <section class="order">
+    <form id="liquidForm">
+      <h3>Сделать заказ</h3>
+
+
+      <label>Дата:</label>
+      <input type="date" id="date" required>
+
+      <label>Время:</label>
+      <input type="time" id="time" required>
+
+      <div class="price-box">
+        <span>Цена</span> <strong id="liquidPrice">15€</strong>
+      </div>
+
+      <button type="submit" class="btn">Заказать</button>
+      <p id="status" class="status"></p>
+    </form>
+  </section>
+
+  
+    <section class="category">
+      <h3>🍓 Ягодные</h3>
+      <div class="grid" id="liquidsBerry">
+        <div class="card" data-code="LQ002">
+          Strawberry Cherry Lemon
+          <div class="emoji">🍓🍒🍋</div>
+        </div>
+        <div class="card" data-code="LQ003">
+          Strawberry Raspberry Cherry Ice
+          <div class="emoji">🍓🍇❄️</div>
+        </div>
+        <div class="card" data-code="LQ004">
+          Strawberry Banana
+          <div class="emoji">🍓🍌</div>
+        </div>
+        <div class="card" data-code="LQ007">
+          Blueberry Raspberry Pomegranate
+          <div class="emoji">🫐🍇</div>
+        </div>
+        <div class="card" data-code="LQ008">
+          Blueberry Sour Raspberry
+          <div class="emoji">🫐🍇</div>
+        </div>
+        <div class="card" data-code="LQ009">
+          Blueberry
+          <div class="emoji">🫐</div>
+        </div>
+        <div class="card" data-code="LQ019">
+          Raspberry Lychee
+          <div class="emoji">🍇🍈</div>
+        </div>
+        <div class="card" data-code="LQ030">
+          Blackberry Lemon
+          <div class="emoji">🍇🍋</div>
+        </div>
+        <div class="card" data-code="LQ021">
+          Grape Cherry
+          <div class="emoji">🍇🍒</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="category">
+      <h3>🍬 Сладкие</h3>
+      <div class="grid" id="liquidsSweet">
+        <div class="card" data-code="LQ006">
+          Cherry Cola
+          <div class="emoji">🍒🥤</div>
+        </div>
+        <div class="card" data-code="LQ014">
+          Pina Colada
+          <div class="emoji">🍍🥥</div>
+        </div>
+        <div class="card" data-code="LQ035">
+          P&B Cloudd
+          <div class="emoji">🍍🍫</div>
+        </div>
+        <div class="card" data-code="LQ033">
+          ELF Jack
+          <div class="emoji">🧙‍♂️🍭</div>
+        </div>
+        <div class="card" data-code="LQ018">
+          Jasmine Raspberry
+          <div class="emoji">🌼🍇</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="category">
+      <h3>❄️ Со льдом</h3>
+      <div class="grid" id="liquidsIce">
+        <div class="card" data-code="LQ010">
+          Blue Razz Ice
+          <div class="emoji">🔵❄️</div>
+        </div>
+        <div class="card" data-code="LQ012">
+          Pineapple Ice
+          <div class="emoji">🍍❄️</div>
+        </div>
+        <div class="card" data-code="LQ027">
+          Cool Mint
+          <div class="emoji">🌿❄️</div>
+        </div>
+        <div class="card" data-code="LQ029">
+          Peach Ice
+          <div class="emoji">🍑❄️</div>
+        </div>
+        <div class="card" data-code="LQ032">
+          Elfbull Ice
+          <div class="emoji">🧝‍♂️❄️</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="category">
+      <h3>🍎 Фруктовые</h3>
+      <div class="grid" id="liquidsFruit">
+        <div class="card" data-code="LQ001">
+          Watermelon
+          <div class="emoji">🍉</div>
+        </div>
+        <div class="card" data-code="LQ005">
+          Cherry Lemon Peach
+          <div class="emoji">🍒🍋🍑</div>
+        </div>
+        <div class="card" data-code="LQ015">
+          Pink Grapefruit
+          <div class="emoji">🍊</div>
+        </div>
+        <div class="card" data-code="LQ016">
+          Lemon Lime
+          <div class="emoji">🍋🍈</div>
+        </div>
+        <div class="card" data-code="LQ017">
+          Mango Peach
+          <div class="emoji">🥭🍑</div>
+        </div>
+        <div class="card" data-code="LQ020">
+          Grape
+          <div class="emoji">🍇</div>
+        </div>
+        <div class="card" data-code="LQ023">
+          Apple Peach
+          <div class="emoji">🍎🍑</div>
+        </div>
+        <div class="card" data-code="LQ024">
+          Apple Pear
+          <div class="emoji">🍎🍐</div>
+        </div>
+        <div class="card" data-code="LQ025">
+          Double Apple
+          <div class="emoji">🍎🍎</div>
+        </div>
+        <div class="card" data-code="LQ026">
+          Sour Apple
+          <div class="emoji">🍏</div>
+        </div>
+        <div class="card" data-code="LQ013">
+          Pineapple Colada
+          <div class="emoji">🍍🥥</div>
+        </div>
+        <div class="card" data-code="LQ022">
+          Green Grape Rose
+          <div class="emoji">🍇🌹</div>
+        </div>
+        <div class="card" data-code="LQ036">
+          Kiwi Passion Fruit Guava
+          <div class="emoji">🥝🥭🥭</div>
+        </div>
+        <div class="card" data-code="LQ017">
+          Peach Mango
+          <div class="emoji">🍑🥭</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Puff&Go © 2025 — Все права защищены</p>
+  </footer>
+
+  <script>
+
+  (function() {
+    const form = document.getElementById("liquidForm");
+    const status = document.getElementById("status");
+    const liquidPriceElem = document.getElementById("liquidPrice");
+
+    const liquidStock = {
+      'LQ001': 5, 'LQ002': 5, 'LQ003': 5, 'LQ004': 5, 'LQ005': 5,
+      'LQ006': 5, 'LQ007': 5, 'LQ008': 5, 'LQ009': 5, 'LQ010': 5,
+      'LQ011': 5, 'LQ012': 5, 'LQ013': 5, 'LQ014': 5, 'LQ015': 5,
+      'LQ016': 5, 'LQ017': 5, 'LQ018': 5, 'LQ019': 5, 'LQ020': 5,
+      'LQ021': 5, 'LQ022': 5, 'LQ023': 5, 'LQ024': 5, 'LQ025': 5,
+      'LQ026': 5, 'LQ027': 5, 'LQ028': 5, 'LQ029': 5, 'LQ030': 5,
+      'LQ031': 5, 'LQ032': 5, 'LQ033': 5, 'LQ034': 5, 'LQ035': 5,
+      'LQ036': 5
+    };
+
+    function updateLiquidPrice() {
+      try {
+        liquidPriceElem.textContent = "15€";
+      } catch (e) {
+        console.error("Ошибка при обновлении цены жидкости:", e);
+        liquidPriceElem.textContent = "15€";
+      }
+    }
+
+    window.addEventListener("load", () => {
+      try {
+        document.getElementById("date").value = "";
+        document.getElementById("time").value = "";
+        updateStockViews();
+        updateLiquidPrice();
+      } catch (e) {
+        console.error("Ошибка при инициализации формы:", e);
+      }
+    });
+
+    function updateStockViews() {
+      try {
+        document.querySelectorAll('.card').forEach(card => {
+          const code = card.getAttribute('data-code');
+          const qty = liquidStock[code] ?? 1;
+          let titleNode = card.querySelector('.card-title');
+          let mainTextNode = null;
+          for (let node of card.childNodes) {
+            if (node.nodeType === 3 && node.textContent.trim()) {
+              mainTextNode = node;
+              break;
+            }
+          }
+          if (qty === 0) {
+            card.classList.add('sold-out');
+            if (!titleNode && mainTextNode) {
+              const span = document.createElement('span');
+              span.className = 'card-title';
+              span.textContent = mainTextNode.textContent;
+              card.replaceChild(span, mainTextNode);
+            }
+          } else {
+            card.classList.remove('sold-out');
+            if (titleNode) {
+              card.insertBefore(document.createTextNode(titleNode.textContent), titleNode);
+              card.removeChild(titleNode);
+            }
+          }
+        });
+      } catch (e) {
+        console.error("Ошибка при обновлении карточек:", e);
+      }
+    }
+
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        try {
+          const code = card.getAttribute('data-code');
+          const qty = liquidStock[code] ?? 1;
+          if (qty === 0) return;
+
+          card.classList.toggle('selected');
+
+
+          const oldBox = document.getElementById("flavorInfoBox");
+          if (oldBox) oldBox.remove();
+
+          const selectedCards = Array.from(document.querySelectorAll('.card.selected'));
+          if (selectedCards.length === 0) return;
+
+          const box = document.createElement("div");
+          box.id = "flavorInfoBox";
+          box.style.marginTop = "10px";
+          box.style.padding = "10px";
+          box.style.border = "1px solid rgba(255,255,255,0.15)";
+          box.style.borderRadius = "8px";
+          box.style.background = "rgba(255,255,255,0.05)";
+          box.innerHTML = "<strong>Вы заказали:</strong><br>";
+
+          selectedCards.forEach(c => {
+            const cCode = c.getAttribute('data-code');
+            const cName = c.textContent.trim();
+            const row = document.createElement("div");
+            row.style.marginBottom = "6px";
+            row.innerHTML = `
+              ${cName}: 
+              <input type="number" min="1" max="${liquidStock[cCode] ?? 1}" value="1" style="width:60px;" data-code="${cCode}">
+              шт.
+            `;
+            box.appendChild(row);
+          });
+
+          const totalDiv = document.createElement("div");
+          totalDiv.style.marginTop = "8px";
+          totalDiv.style.fontWeight = "bold";
+          totalDiv.textContent = "Общее количество: " + selectedCards.length + " шт.";
+          box.appendChild(totalDiv);
+
+          box.querySelectorAll("input").forEach(input => {
+            input.addEventListener("input", () => {
+              let sum = 0;
+              box.querySelectorAll("input").forEach(i => sum += parseInt(i.value, 10) || 0);
+              totalDiv.textContent = `Общее количество: ${sum} шт.`;
+            });
+          });
+
+          const form = document.getElementById("liquidForm");
+          form.parentElement.insertBefore(box, form);
+        } catch (e) {
+          console.error("Ошибка при выборе жидкости:", e);
+        }
+      });
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      try {
+        const selectedCards = Array.from(document.querySelectorAll('.card.selected'));
+        if (selectedCards.length === 0) {
+          alert("Выберите хотя бы одну жидкость!");
+          return;
+        }
+        const date = document.getElementById("date").value;
+        const time = document.getElementById("time").value;
+        let items = [];
+        const infoBox = document.getElementById("flavorInfoBox");
+        if (infoBox) {
+          infoBox.querySelectorAll('input[data-code]').forEach(input => {
+            items.push({
+              code: input.getAttribute('data-code'),
+              qty: parseInt(input.value, 10) || 1
+            });
+          });
+        }
+      
+        for (const item of items) {
+          const maxQty = liquidStock[item.code] ?? 1;
+          if (maxQty === 0) {
+            alert(`Вкус "${item.code}" временно отсутствует.`);
+            updateStockViews();
+            return;
+          }
+          if (item.qty > maxQty) {
+            alert(`Доступно только ${maxQty} шт. для вкуса "${item.code}".`);
+            return;
+          }
+        }
+        const order = {
+          type: "Жидкость",
+          items,
+          date,
+          time,
+          price: 15
+        };
+        try {
+          localStorage.setItem("lastOrder", JSON.stringify(order));
+        } catch (e) {
+          console.error("Ошибка при сохранении заказа в localStorage:", e);
+          status.textContent = "Ошибка при сохранении заказа. Попробуйте ещё раз.";
+          return;
+        }
+        window.location.href = "delivery.html";
+      } catch (e) {
+        console.error("Ошибка при оформлении заказа:", e);
+        status.textContent = "Ошибка при оформлении заказа. Попробуйте ещё раз.";
+      }
+    });
+  })();
+  </script>
+  
+  <style>
+  
+    .sold-out-option {
+      color: #ff3333 !important;
+      background: #fff0f0 !important;
+    }
+  </style>
+</body>
+</html>

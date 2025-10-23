@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Puff&Go — Главная</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      background: radial-gradient(circle at 50% 20%, #1a1a1d, #0b0b0d 50%);
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(76,139,245,0.15), transparent 50%);
+      z-index: 0;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 20px;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 1.2s ease-out forwards;
+    }
+
+    .hero h1 {
+      font-size: 64px;
+      margin-bottom: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, #4c8bf5, #91a8f8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 1.2s ease-out forwards;
+      animation-delay: 0.3s;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 1.2s ease-out forwards;
+      animation-delay: 0.6s;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1.2s ease-out forwards;
+      animation-delay: 0.9s;
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    
+    .btn {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      transition: 0.3s;
+      box-shadow: 0 4px 20px rgba(76,139,245,0.25);
+    }
+
+    .btn:hover {
+      background: #3b74d9;
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: none;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.05);
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 42px;
+      }
+      .lead {
+        font-size: 16px;
+      }
+      .hero-actions {
+        flex-direction: column;
+      }
+    }
+
+    .category-card {
+      background:#232426;
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 4px 20px rgba(76,139,245,0.25);
+      transition:0.3s;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
+    }
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow:0 8px 25px rgba(76,139,245,0.35);
+    }
+    .category-card h3 {
+      margin:0;
+      font-size:20px;
+    }
+    .category-card p {
+      text-align:center;
+      font-size:16px;
+    }
+
+    .hero .categories {
+      display:flex;
+      justify-content:center;
+      gap:40px;
+      margin-top:40px;
+    }
+
+    .hero .categories div {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:30px;
+    }
+  </style>
+</head>
+<body class="home">
+  <header class="site-header">
+    <div class="logo">Puff&Go</div>
+  </header>
+
+  <main class="hero hero-centered">
+    <div class="hero-inner">
+      <h1>Puff&Go</h1>
+      <p class="lead">
+        Munich
+      </p>
+      <section class="categories">
+        <div style="display:flex; flex-direction:row; justify-content:space-between; width:100%; max-width:600px; margin:0 auto; gap:60px;">
+          <div class="category-card">
+            <h3>💧 Жидкости</h3>
+            <p>Выберите любимый вкус и оформите заказ онлайн.</p>
+            <a class="btn" href="liquids.html">Перейти</a>
+          </div>
+          <div class="category-card">
+            <h3>⚡ Устройства</h3>
+            <p>Огромный выбор устройств для каждого вейпера.</p>
+            <a class="btn" href="devices.html">Перейти</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <section class="about" style="padding:60px 20px; background:#0b0b0d; color:#fff; text-align:center;">
+    <h2>О нас</h2>
+    <p style="max-width:700px; margin:20px auto; font-size:18px; line-height:1.6;">
+      Puff&Go — ваш надежный магазин жидкостей и устройств для вейпинга в Мюнхене. Мы предлагаем широкий ассортимент товаров, быструю доставку и качественную поддержку.
+    </p>
+  </section>
+
+  <section class="features" style="padding:60px 20px; background:#151516; color:#fff; text-align:center;">
+    <h2>Наши преимущества</h2>
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:30px; margin-top:40px;">
+      <div style="flex:1 1 200px; max-width:250px; background:#232426; padding:20px; border-radius:12px;">
+        <h3>🚀 Быстрая выдача в центре Мюнхена</h3>
+        <p>Ваши заказы будут вам отданы максимально быстро и удобно.</p>
+      </div>
+      <div style="flex:1 1 200px; max-width:250px; background:#232426; padding:20px; border-radius:12px;">
+        <h3>💧 Широкий ассортимент</h3>
+        <p>Огромный выбор жидкостей и устройств для любого вкуса.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>Puff&Go © 2025 — Стиль в каждом вдохе</p>
+  </footer>
+</body>
+  <!-- Age verification overlay -->
+  <div class="age-overlay" id="ageOverlay">
+    <div class="age-popup">
+      <h2>Вам уже есть 18 лет?</h2>
+      <p>Этот сайт предназначен только для посетителей старше 18 лет.</p>
+      <button class="btn-yes" id="btnYes">Да</button>
+      <button class="btn-no" id="btnNo">Нет</button>
+    </div>
+  </div>
+
+  <style>
+    .age-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .age-popup {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 320px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.3s ease;
+    }
+    .age-popup h2 {
+      margin-bottom: 10px;
+    }
+    .age-popup p {
+      margin-bottom: 20px;
+      color: #444;
+    }
+    .age-popup button {
+      padding: 10px 20px;
+      margin: 0 8px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .btn-yes {
+      background: #28a745;
+      color: #fff;
+    }
+    .btn-no {
+      background: #dc3545;
+      color: #fff;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: scale(0.9);}
+      to {opacity: 1; transform: scale(1);}
+    }
+  </style>
+
+  <script>
+    const overlay = document.getElementById('ageOverlay');
+    const btnYes = document.getElementById('btnYes');
+    const btnNo = document.getElementById('btnNo');
+
+    const verified = localStorage.getItem('ageVerified');
+    if (verified === 'true') {
+      overlay.style.display = 'none';
+    }
+
+    btnYes.addEventListener('click', () => {
+      localStorage.setItem('ageVerified', 'true');
+      overlay.style.display = 'none';
+    });
+
+    btnNo.addEventListener('click', () => {
+      document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;color:#fff;font-size:20px;text-align:center;">🚫 Доступ запрещён. Сайт доступен только посетителям 18+</div>';
+    });
+  </script>
+</html>
