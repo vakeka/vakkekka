@@ -287,10 +287,22 @@
     }
   }
 
+  // --- Новый блок обновления цены и qty ---
+  function updateTotalPrice() {
+    if (!selectedDeviceCode) return;
+    const qty = parseInt(document.getElementById("qty").value || 1, 10);
+    const device = deviceStock[selectedDeviceCode];
+    const totalPrice = device.price * qty;
+    devicePrice.textContent = totalPrice + '€';
+  }
+
+  // Обновление цены при изменении количества
+  document.getElementById("qty").addEventListener("input", updateTotalPrice);
+
+  // Обновление цены при выборе устройства
   deviceSelect.addEventListener('change', () => {
     selectedDeviceCode = deviceSelect.value;
     selectedFlavorCode = null;
-    // Заполнить select вкусов
     updateFlavorSelect(selectedDeviceCode);
     flavorSection.classList.remove('hidden');
     detailsSection.classList.add('hidden');
@@ -300,7 +312,7 @@
     document.getElementById("date").disabled = true;
     document.getElementById("time").disabled = true;
     document.getElementById("qty").disabled = true;
-    devicePrice.textContent = deviceStock[selectedDeviceCode].price + '€';
+    updateTotalPrice();
   });
 
   function updateFlavorSelect(code) {
@@ -321,6 +333,7 @@
     flavorSelect.selectedIndex = 0;
   }
 
+  
   flavorSelect.addEventListener('change', () => {
     selectedFlavorCode = flavorSelect.value;
     if (selectedFlavorCode) {
@@ -328,6 +341,7 @@
       document.getElementById("date").disabled = false;
       document.getElementById("time").disabled = false;
       document.getElementById("qty").disabled = false;
+      updateTotalPrice();
     } else {
       detailsSection.classList.add('hidden');
       document.getElementById("date").disabled = true;
@@ -365,7 +379,7 @@
       time: document.getElementById("time").value,
       orderId: orderId
     };
-    // Сохраняем order в localStorage
+ 
     localStorage.setItem("lastOrder", JSON.stringify(order));
    
     device.qty -= qty;
@@ -414,4 +428,5 @@
   });
   </script>
 </body>
+<script src="script.js"></script>
 </html>
